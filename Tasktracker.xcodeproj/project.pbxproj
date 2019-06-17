@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		864636F422B7AECE004AF864 /* Task tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		864636F422B7AECE004AF864 /* Tasktracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasktracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		864636F722B7AECE004AF864 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		864636F922B7AECE004AF864 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		864636FC22B7AECE004AF864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		864636F522B7AECE004AF864 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				864636F422B7AECE004AF864 /* Task tracker.app */,
+				864636F422B7AECE004AF864 /* Tasktracker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,9 +70,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		864636F322B7AECE004AF864 /* Task tracker */ = {
+		864636F322B7AECE004AF864 /* Tasktracker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8646370622B7AECF004AF864 /* Build configuration list for PBXNativeTarget "Task tracker" */;
+			buildConfigurationList = 8646370622B7AECF004AF864 /* Build configuration list for PBXNativeTarget "Tasktracker" */;
 			buildPhases = (
 				864636F022B7AECE004AF864 /* Sources */,
 				864636F122B7AECE004AF864 /* Frameworks */,
@@ -82,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = "Task tracker";
+			name = Tasktracker;
 			productName = "Task tracker";
-			productReference = 864636F422B7AECE004AF864 /* Task tracker.app */;
+			productReference = 864636F422B7AECE004AF864 /* Tasktracker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 864636EF22B7AECE004AF864 /* Build configuration list for PBXProject "Task tracker" */;
+			buildConfigurationList = 864636EF22B7AECE004AF864 /* Build configuration list for PBXProject "Tasktracker" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				864636F322B7AECE004AF864 /* Task tracker */,
+				864636F322B7AECE004AF864 /* Tasktracker */,
 			);
 		};
 /* End PBXProject section */
@@ -321,7 +321,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		864636EF22B7AECE004AF864 /* Build configuration list for PBXProject "Task tracker" */ = {
+		864636EF22B7AECE004AF864 /* Build configuration list for PBXProject "Tasktracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8646370422B7AECF004AF864 /* Debug */,
@@ -330,7 +330,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8646370622B7AECF004AF864 /* Build configuration list for PBXNativeTarget "Task tracker" */ = {
+		8646370622B7AECF004AF864 /* Build configuration list for PBXNativeTarget "Tasktracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8646370722B7AECF004AF864 /* Debug */,

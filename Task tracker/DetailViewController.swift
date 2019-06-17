@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var inputDate: UITextField!
     @IBOutlet weak var headline: UITextField!
@@ -29,11 +29,15 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        taskText.delegate = self as? UITextViewDelegate
+        // add placeholder to TextView
+        taskText.delegate = self
         taskText.text = "About task.."
         taskText.textColor = UIColor.lightGray
-        taskText.delegate?.textViewDidBeginEditing?(taskText)
-        taskText.delegate?.textViewDidEndEditing?(taskText)
+        
+        // hide placeholder while adding text
+        textViewDidBeginEditing(taskText)
+        //return back if text is empty
+        textViewDidEndEditing(taskText)
         
         // select task Status with pickerView
         picker.delegate = self
@@ -52,20 +56,18 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         //save in datePcker textField
         inputDate.inputView = datePicker
         
-       
-        
     }
     
     // the placeholder disappear when your UITextView is selected
-    func textViewDidBeginEditing(textView: UITextView) {
-        if taskText.textColor == UIColor.lightGray {
-            taskText.text = nil
-            taskText.textColor = UIColor.black
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
         }
     }
     
     // if the text view is empty, set placeholder
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "About task.."
             textView.textColor = UIColor.lightGray
@@ -76,23 +78,26 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    // elements in PickerView
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return state.count
     }
+    // our state in PickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return state[row]
     }
+    // hide after selected
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         taskStatus.text = state[row]
         self.view.endEditing(true)
     }
     
-    // for datePicker
+    // hide after selected date
     @objc func viewTap(gestureRecognizer : UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
+    // for datePicker
     @objc func dateChanged(datePcker: UIDatePicker) {
         let formatOfdata = DateFormatter()
         formatOfdata.dateFormat = "MM/dd/yyyy"
