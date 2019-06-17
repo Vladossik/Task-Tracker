@@ -34,6 +34,11 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         taskText.text = "About task.."
         taskText.textColor = UIColor.lightGray
         
+        // add border to textView
+        taskText.layer.borderColor = UIColor.lightGray.cgColor
+        taskText.layer.cornerRadius = 5.0
+        taskText.layer.borderWidth = 0.5
+        
         // hide placeholder while adding text
         textViewDidBeginEditing(taskText)
         //return back if text is empty
