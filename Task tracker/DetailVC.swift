@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate {
+class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var inputDate: UITextField!
     @IBOutlet weak var headline: UITextField!
@@ -16,11 +16,32 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     @IBOutlet weak var taskText: UITextView!
     
     @IBAction func saveInfoTask(_ sender: Any) {
-//        let head = headline.text
-//        let date = inputDate.text
         
+        if headline.text == nil || inputDate.text == nil || taskStatus.text == nil || taskText.text == nil || taskText.text == "About task.." {
+            let myAlert = UIAlertController(title: "Alert", message: "All fields must be filled", preferredStyle: UIAlertController.Style.alert)
+            let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+            
+            myAlert.addAction(okey)
+            self.present(myAlert, animated: true, completion: nil)
+            
+            return
+            
+        } else {
+            // add element to Task
+            let task: Task! = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
+            // create key
+            let newKey = UUID().uuidString
+            // save task to UserDefaults
+            UserDefaults.standard.save(task: task, with: newKey)
+            
+            let myAlert = UIAlertController(title: "Alert", message: "Task saved", preferredStyle: UIAlertController.Style.alert)
+            let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+            
+            myAlert.addAction(okey)
+            self.present(myAlert, animated: true, completion: nil)
+            
+        }
     }
-    
     
     private var datePicker: UIDatePicker?
     var picker = UIPickerView()
@@ -52,10 +73,10 @@ class DetailViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
         // create datePicker for pick date
         datePicker = UIDatePicker()
         datePicker?.datePickerMode = .date
-        datePicker?.addTarget(self, action: #selector(DetailViewController.dateChanged(datePcker:)), for: .valueChanged)
+        datePicker?.addTarget(self, action: #selector(DetailVC.dateChanged(datePcker:)), for: .valueChanged)
         
         // hide datePicker after tap on view
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.viewTap(gestureRecognizer:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DetailVC.viewTap(gestureRecognizer:)))
         view.addGestureRecognizer(tap)
         
         //save in datePcker textField
