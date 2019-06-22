@@ -17,15 +17,16 @@ class TasksTableVC: UITableViewController {
         
         let keys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
         tasks = keys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
-        
+
+       
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return tasks.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return tasks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,5 +39,24 @@ class TasksTableVC: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            // TEST
+            tasks.remove(at: indexPath.row)
+            
+            for i in tasks {
+                print(i)
+            }
+            
+            let key = UserDefaults.standard.getKey(with: tasks[indexPath.row].self)
+            UserDefaults.standard.remove(with: key)
+            
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+            for i in tasks {
+                print(i)
+            }
+        }
+    }
 
 }

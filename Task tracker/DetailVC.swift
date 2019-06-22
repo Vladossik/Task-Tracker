@@ -17,6 +17,7 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     
     @IBAction func saveInfoTask(_ sender: Any) {
         
+        // check if all fields are filled
         if headline.text == nil || inputDate.text == nil || taskStatus.text == nil || taskText.text == nil || taskText.text == "About task.." {
             let myAlert = UIAlertController(title: "Alert", message: "All fields must be filled", preferredStyle: UIAlertController.Style.alert)
             let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
@@ -33,6 +34,7 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
             let newKey = UUID().uuidString
             // save task to UserDefaults
             UserDefaults.standard.save(task: task, with: newKey)
+            UserDefaults.standard.synchronize()
             
             let myAlert = UIAlertController(title: "Alert", message: "Task saved", preferredStyle: UIAlertController.Style.alert)
             let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
