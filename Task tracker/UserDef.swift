@@ -25,6 +25,7 @@ struct Task : Equatable {
 }
 
 var userDefaults = UserDefaults.standard
+// array with all keys
 var allKeys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
 
 extension UserDefaults {
@@ -41,11 +42,6 @@ extension UserDefaults {
         userDefaults.set(allKeys, forKey: "all-keys")
         
         userDefaults.synchronize()
-    }
-    
-    func update(task: Task, with key: String) {
-        remove(with: key)
-        save(task: task, with: key)
     }
     
     func getTask(with key: String) -> Task? {
@@ -83,5 +79,10 @@ extension UserDefaults {
         userDefaults.set(allKeys, forKey: "all-keys")
         
         userDefaults.synchronize()
+    }
+    
+    func update(task: Task, with key: String) {
+        remove(with: key)
+        save(task: task, with: key)
     }
 }

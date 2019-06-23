@@ -24,21 +24,22 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
             return
             
         } else {
-            // add element to Task
-            let task: Task! = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
-            
-            if let keyTask = UserDefaults.standard.getKey(with: task) {
-                // if task already exists
+            // if task already exists
+            if let keyTask = UserDefaults.standard.getKey(with: task!) {
+                // cell changes
+                let task = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
+                
+                // update task with changes
                 UserDefaults.standard.update(task: task, with: keyTask)
                 
                 alertTask(message: "Task was updated")
                 
             } else {
-                // create key
+                // if it's new one, create key
                 let newKey = UUID().uuidString
                 
                 // save task to UserDefaults
-                UserDefaults.standard.save(task: task, with: newKey)
+                UserDefaults.standard.save(task: task!, with: newKey)
                 UserDefaults.standard.synchronize()
                 
                 alertTask(message: "Task was saved")
@@ -59,42 +60,54 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
     private var datePicker: UIDatePicker?
     var picker = UIPickerView()
     var state = ["New task", "In progress", "Done"]
+    var task: Task?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // add placeholder to TextView
-        taskText.delegate = self
-        taskText.text = "About task.."
-        taskText.textColor = UIColor.lightGray
+        if let task = task {
+            // if task from cell
+            headline.text = task.head
+            inputDate.text = task.date
+            taskStatus.text = task.status
+            taskText.text = task.text
+            
+        } else {
+            // new task
+            task = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
+        
+            // add placeholder to TextView
+            taskText.delegate = self
+            taskText.text = "About task.."
+            taskText.textColor = UIColor.lightGray
+            
+            // hide placeholder while adding text
+            textViewDidBeginEditing(taskText)
+            //return back if text is empty
+            textViewDidEndEditing(taskText)
+            
+            // select task Status with pickerView
+            picker.delegate = self
+            picker.dataSource = self
+            taskStatus.inputView = picker
+
+            // create datePicker for pick date
+            datePicker = UIDatePicker()
+            datePicker?.datePickerMode = .date
+            datePicker?.addTarget(self, action: #selector(DetailVC.dateChanged(datePcker:)), for: .valueChanged)
+            
+            // hide datePicker after tap on view
+            let tap = UITapGestureRecognizer(target: self, action: #selector(DetailVC.viewTap(gestureRecognizer:)))
+            view.addGestureRecognizer(tap)
+            
+            //save in datePcker textField
+            inputDate.inputView = datePicker
+        }
         
         // add border to textView
         taskText.layer.borderColor = UIColor.lightGray.cgColor
         taskText.layer.cornerRadius = 5.0
         taskText.layer.borderWidth = 0.5
-        
-        // hide placeholder while adding text
-        textViewDidBeginEditing(taskText)
-        //return back if text is empty
-        textViewDidEndEditing(taskText)
-        
-        // select task Status with pickerView
-        picker.delegate = self
-        picker.dataSource = self
-        taskStatus.inputView = picker
-
-        // create datePicker for pick date
-        datePicker = UIDatePicker()
-        datePicker?.datePickerMode = .date
-        datePicker?.addTarget(self, action: #selector(DetailVC.dateChanged(datePcker:)), for: .valueChanged)
-        
-        // hide datePicker after tap on view
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DetailVC.viewTap(gestureRecognizer:)))
-        view.addGestureRecognizer(tap)
-        
-        //save in datePcker textField
-        inputDate.inputView = datePicker
-        
     }
     
     // the placeholder disappear when your UITextView is selected

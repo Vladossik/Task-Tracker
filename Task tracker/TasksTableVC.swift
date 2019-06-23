@@ -22,7 +22,7 @@ class TasksTableVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // add new elements to array after save
+        // add new elements to array after saving
         tasks = allKeys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
         tableView.reloadData()
     }
@@ -38,6 +38,7 @@ class TasksTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell {
+            // fill cell with method from TableViewCell
             cell.setTask(task)
             return cell
         } else {
@@ -60,6 +61,7 @@ class TasksTableVC: UITableViewController {
         }
     }
     
+    // for selected cell with elements(data)
     var selectedTask: Task?
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -71,12 +73,8 @@ class TasksTableVC: UITableViewController {
 
         if segue.identifier == "showDetail" {
             let vc = segue.destination as! DetailVC
-            //let indexPath = self.tableView.indexPathForSelectedRow?.row
 
-            vc.headline.text! = selectedTask!.head
-            vc.inputDate.text! = selectedTask!.date
-            vc.taskStatus.text! = selectedTask!.status
-            vc.taskText.text! = selectedTask!.text
+            vc.task = selectedTask
         }
     }
 
