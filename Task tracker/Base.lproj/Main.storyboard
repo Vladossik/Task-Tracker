@@ -86,9 +86,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="VWy-Wh-JOs">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="wait" id="JhF-a2-pzO"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Qyl-Zh-RYN">
                             <connections>
-                                <segue destination="3Df-qL-bYN" kind="show" id="hCd-br-3Km"/>
+                                <segue destination="3Df-qL-bYN" kind="show" identifier="addElement" id="j5n-4O-WnN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -96,7 +97,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iEu-ay-1Wx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="746" y="-42"/>
+            <point key="canvasLocation" x="768" y="-42"/>
         </scene>
         <!--Detail task-->
         <scene sceneID="dDG-vE-I9P">
@@ -174,7 +175,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwv-BL-mbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1498.5507246376812" y="-42.1875"/>
+            <point key="canvasLocation" x="1551" y="-42"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Bii-ir-q6Q">
@@ -195,4 +196,7 @@
             <point key="canvasLocation" x="-4.3478260869565224" y="-42.1875"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="wait" width="50" height="50"/>
+    </resources>
 </document>

@@ -86,6 +86,7 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
     }
     
+    
     // the placeholder disappear when your UITextView is selected
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
