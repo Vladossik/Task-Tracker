@@ -50,7 +50,7 @@ class TasksTableVC: UITableViewController {
             
             // delete from userDefaults
             let key = UserDefaults.standard.getKey(with: tasks[indexPath.row].self)
-            UserDefaults.standard.remove(with: key)
+            UserDefaults.standard.remove(with: key!)
             
             // delete from our tableView with bottom
             tasks.remove(at: indexPath.row)
@@ -60,20 +60,24 @@ class TasksTableVC: UITableViewController {
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//        if let vc = segue.destination as? DetailVC {
-//            let indexPath = self.tableView.indexPathForSelectedRow?.row
-//
-//            vc.headline.text = tasks[indexPath!].head
-//            vc.inputDate.text = tasks[indexPath!].date
-//            vc.taskStatus.text = tasks[indexPath!].status
-//            vc.taskText.text = tasks[indexPath!].text
-//        }
-//    }
-//
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.performSegue(withIdentifier: "showDetail", sender: self)
-//    }
+    var selectedTask: Task?
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedTask = tasks[indexPath.row]
+        performSegue(withIdentifier: "showDetail", sender: self)
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "showDetail" {
+            let vc = segue.destination as! DetailVC
+            //let indexPath = self.tableView.indexPathForSelectedRow?.row
+
+            vc.headline.text! = selectedTask!.head
+            vc.inputDate.text! = selectedTask!.date
+            vc.taskStatus.text! = selectedTask!.status
+            vc.taskText.text! = selectedTask!.text
+        }
+    }
+
 }

@@ -43,6 +43,11 @@ extension UserDefaults {
         userDefaults.synchronize()
     }
     
+    func update(task: Task, with key: String) {
+        remove(with: key)
+        save(task: task, with: key)
+    }
+    
     func getTask(with key: String) -> Task? {
         guard
             let payload = userDefaults.dictionary(forKey: key) as? [String: String],
@@ -56,14 +61,18 @@ extension UserDefaults {
         return Task(head: head, date: date, status: status, text: text)
     }
     
-    func getKey(with task: Task) -> String {
-        var keyTask: String = ""
+    func getKey(with task: Task) -> String? {
+        var keyTask: String?
         for i in allKeys {
             if task == userDefaults.getTask(with: i) {
                 keyTask = i
             }
         }
-        return keyTask
+        if keyTask != nil {
+            return keyTask
+        } else {
+            return nil
+        }
     }
     
     func remove(with key: String) {

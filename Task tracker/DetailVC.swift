@@ -19,30 +19,41 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         
         // check if all fields are filled
         if headline.text == nil || inputDate.text == nil || taskStatus.text == nil || taskText.text == nil || taskText.text == "About task.." {
-            let myAlert = UIAlertController(title: "Alert", message: "All fields must be filled", preferredStyle: UIAlertController.Style.alert)
-            let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
             
-            myAlert.addAction(okey)
-            self.present(myAlert, animated: true, completion: nil)
-            
+            alertTask(message: "All fields must be filled")
             return
             
         } else {
             // add element to Task
             let task: Task! = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
-            // create key
-            let newKey = UUID().uuidString
-            // save task to UserDefaults
-            UserDefaults.standard.save(task: task, with: newKey)
-            UserDefaults.standard.synchronize()
             
-            let myAlert = UIAlertController(title: "Alert", message: "Task saved", preferredStyle: UIAlertController.Style.alert)
-            let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
-            
-            myAlert.addAction(okey)
-            self.present(myAlert, animated: true, completion: nil)
-            
+            if let keyTask = UserDefaults.standard.getKey(with: task) {
+                // if task already exists
+                UserDefaults.standard.update(task: task, with: keyTask)
+                
+                alertTask(message: "Task was updated")
+                
+            } else {
+                // create key
+                let newKey = UUID().uuidString
+                
+                // save task to UserDefaults
+                UserDefaults.standard.save(task: task, with: newKey)
+                UserDefaults.standard.synchronize()
+                
+                alertTask(message: "Task was saved")
+            }
         }
+    }
+    
+    // default alert for different cases
+    func alertTask(message: String) {
+        
+        let myAlert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertController.Style.alert)
+        let okey = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil)
+        
+        myAlert.addAction(okey)
+        self.present(myAlert, animated: true, completion: nil)
     }
     
     private var datePicker: UIDatePicker?
@@ -85,7 +96,6 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         inputDate.inputView = datePicker
         
     }
-    
     
     // the placeholder disappear when your UITextView is selected
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -134,4 +144,5 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
         inputDate.text = formatOfdata.string(from: datePicker!.date)
         view.endEditing(true)
     }
+    
 }
