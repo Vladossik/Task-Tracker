@@ -17,7 +17,14 @@ class TasksTableVC: UITableViewController {
         
         let keys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
         tasks = keys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
-       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // add new elements to array after save
+        tasks = allKeys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
+        tableView.reloadData()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -45,7 +52,7 @@ class TasksTableVC: UITableViewController {
             let key = UserDefaults.standard.getKey(with: tasks[indexPath.row].self)
             UserDefaults.standard.remove(with: key)
             
-            // delete from our tableView
+            // delete from our tableView with bottom
             tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
             
@@ -53,20 +60,20 @@ class TasksTableVC: UITableViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if let vc = segue.destination as? DetailVC {
-            let indexPath = self.tableView.indexPathForSelectedRow?.row
-
-            vc.headline.text = tasks[indexPath!].head
-            vc.inputDate.text = tasks[indexPath!].date
-            vc.taskStatus.text = tasks[indexPath!].status
-            vc.taskText.text = tasks[indexPath!].text
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showDetail", sender: self)
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        if let vc = segue.destination as? DetailVC {
+//            let indexPath = self.tableView.indexPathForSelectedRow?.row
+//
+//            vc.headline.text = tasks[indexPath!].head
+//            vc.inputDate.text = tasks[indexPath!].date
+//            vc.taskStatus.text = tasks[indexPath!].status
+//            vc.taskText.text = tasks[indexPath!].text
+//        }
+//    }
+//
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        self.performSegue(withIdentifier: "showDetail", sender: self)
+//    }
     
 }
