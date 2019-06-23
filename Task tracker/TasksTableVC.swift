@@ -41,13 +41,15 @@ class TasksTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
-            // TEST
-            tasks.remove(at: indexPath.row)
-            
+            // delete from userDefaults
             let key = UserDefaults.standard.getKey(with: tasks[indexPath.row].self)
             UserDefaults.standard.remove(with: key)
             
+            // delete from our tableView
+            tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
+            
+            tableView.reloadData()
         }
     }
     
