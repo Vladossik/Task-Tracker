@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Task : Equatable {
     var head : String
@@ -29,7 +30,7 @@ var userDefaults = UserDefaults.standard
 var allKeys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
 
 extension UserDefaults {
-   
+    
     func save(task: Task, with key: String) {
         let payload = [
             "head" : task.head,
@@ -84,5 +85,44 @@ extension UserDefaults {
     func update(task: Task, with key: String) {
         remove(with: key)
         save(task: task, with: key)
+    }
+    
+    func minTaskByDate() -> Task {
+        
+//        //Create a date formatter to convert our date strings to Date objects
+//        let df = DateFormatter()
+//        df.dateFormat = "MM/dd/yyyy"
+//        let array: [String:]
+//        let sortedArray = task
+//        //First map to an array tuples: [(Date, [String:Int]]
+//            .map{(df.date(from: $0.task)!, [$0.key:$0.value])}
+        
+        
+//        let dayTotalDicTest: [String:Int] = [
+//            "04-09-2015" : 4,
+//            "04-10-2015" : 6,
+//            "04-07-2015" : 8,
+//            "03-28-2015" : 10,
+//            "12-10-2014" : 12,
+//            "12-10-2015" : 12]
+//
+//        //Create a date formatter to convert our date strings to Date objects
+//        let df = DateFormatter()
+//        df.dateFormat = "MM-dd-yyyy"
+//
+//        let sortedArrayOfDicts = dayTotalDicTest
+//            //First map to an array tuples: [(Date, [String:Int]]
+//            .map{(df.date(from: $0.key)!, [$0.key:$0.value])}
+//
+//            //Now sort by the dates, using `<` since dates are Comparable.
+//            .sorted{$0.0 < $1.0}
+//
+//            //And re-map to discard the Date objects
+//            .map{$1}
+//
+//        for item in sortedArrayOfDicts {
+//            print(item)
+//        }
+        return Task(head: "Vlada", date: "23/11/1997", status: "New Task", text: "DR")
     }
 }

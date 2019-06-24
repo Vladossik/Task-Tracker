@@ -8,9 +8,10 @@
 
 import UIKit
 
-class TasksTableVC: UITableViewController {
+class TasksTableVC: UITableViewController, UIPopoverPresentationControllerDelegate, FilterTableViewDelegate {
 
     var tasks: [Task] = []
+    var filteredTasks = [Task]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,19 +25,20 @@ class TasksTableVC: UITableViewController {
         
         // add new elements to array after saving
         tasks = allKeys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
+        filteredTasks = tasks
         tableView.reloadData()
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return filteredTasks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = tasks[indexPath.row]
+        let task = filteredTasks[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell {
             // fill cell with method from TableViewCell
             cell.setTask(task)
@@ -49,12 +51,15 @@ class TasksTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
+            let task = filteredTasks[indexPath.row]
+            
             // delete from userDefaults
-            let key = UserDefaults.standard.getKey(with: tasks[indexPath.row].self)
+            let key = UserDefaults.standard.getKey(with: task.self)
             UserDefaults.standard.remove(with: key!)
             
             // delete from our tableView with bottom
-            tasks.remove(at: indexPath.row)
+            filteredTasks.remove(at: indexPath.row)
+            tasks.removeAll(where: { $0 == task})
             tableView.deleteRows(at: [indexPath], with: .bottom)
             
             tableView.reloadData()
@@ -65,17 +70,43 @@ class TasksTableVC: UITableViewController {
     var selectedTask: Task?
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedTask = tasks[indexPath.row]
+        selectedTask = filteredTasks[indexPath.row]
         performSegue(withIdentifier: "showDetail", sender: self)
     }
     
+    func didTappedStatus(_ status: String) {
+        filteredTasks = tasks.filter { $0.status == status }
+        tableView.reloadData()
+    }
+    
+    @IBAction func filterButtonDidTap(_ sender: UIBarButtonItem) {
+        let controller = FilterTableViewController(with: ["New task", "In progress", "Done"])
+        controller.modalPresentationStyle = .popover
+        controller.preferredContentSize = CGSize(width: 200, height: 130)
+        controller.delegate = self
+        
+        let popoverController = controller.popoverPresentationController
+        popoverController?.delegate = self
+        popoverController?.sourceView = navigationController?.view
+        popoverController?.sourceRect = CGRect(x: 8,
+        y: 0,
+        width: 100,
+        height: 55)
+        popoverController?.permittedArrowDirections = .up
+        present(controller, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
         if segue.identifier == "showDetail" {
             let vc = segue.destination as! DetailVC
-
+            
             vc.task = selectedTask
         }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 
 }

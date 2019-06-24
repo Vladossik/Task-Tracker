@@ -86,7 +86,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="VWy-Wh-JOs">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="wait" id="JhF-a2-pzO"/>
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="wait" id="gR6-Jp-byH">
+                            <connections>
+                                <action selector="filterButtonDidTap:" destination="Fac-fk-FUF" id="AGH-53-1Ov"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Qyl-Zh-RYN">
                             <connections>
                                 <segue destination="3Df-qL-bYN" kind="show" identifier="addElement" id="j5n-4O-WnN"/>
@@ -200,7 +205,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="wait" width="50" height="50"/>
+        <image name="wait" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="j5n-4O-WnN"/>
