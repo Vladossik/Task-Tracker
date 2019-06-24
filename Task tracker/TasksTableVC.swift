@@ -18,6 +18,7 @@ class TasksTableVC: UITableViewController, UIPopoverPresentationControllerDelega
         
         let keys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
         tasks = keys.map(UserDefaults.standard.getTask(with:)).compactMap { $0 }
+        filteredTasks = tasks
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +50,7 @@ class TasksTableVC: UITableViewController, UIPopoverPresentationControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+       
         if editingStyle == .delete {
             
             let task = filteredTasks[indexPath.row]

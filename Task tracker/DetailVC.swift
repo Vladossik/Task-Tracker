@@ -38,6 +38,7 @@ class DetailVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, 
                 // if it's new one, create key
                 let newKey = UUID().uuidString
                 
+                task = Task(head: headline.text!, date: inputDate.text!, status: taskStatus.text!, text: taskText.text!)
                 // save task to UserDefaults
                 UserDefaults.standard.save(task: task!, with: newKey)
                 UserDefaults.standard.synchronize()
