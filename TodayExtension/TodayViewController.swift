@@ -17,15 +17,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        _ = UserDefaults(suiteName: "group.sharingForTodayExtension")
     
-//        let myAppUrl = URL(string: "main-screen:")!
-//        extensionContext?.open(myAppUrl, completionHandler: { (success) in
-//            if (!success) {
-//                print("error: failed to open app from Today Extension")
-//            }
-//        })
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

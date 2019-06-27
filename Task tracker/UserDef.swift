@@ -29,6 +29,8 @@ var userDefaults = UserDefaults.standard
 // array with all keys
 var allKeys = UserDefaults.standard.stringArray(forKey: "all-keys") ?? []
 
+var sharedDefaults = UserDefaults(suiteName: "group.sharingForTodayExtension")
+
 extension UserDefaults {
     
     func save(task: Task, with key: String) {
