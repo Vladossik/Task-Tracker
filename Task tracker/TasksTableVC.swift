@@ -77,14 +77,19 @@ class TasksTableVC: UITableViewController, UIPopoverPresentationControllerDelega
     }
     
     func didTappedStatus(_ status: String) {
-        filteredTasks = tasks.filter { $0.status == status }
+        if status == "All" {
+            filteredTasks = tasks
+        } else{
+            filteredTasks = tasks.filter { $0.status == status }
+            
+        }
         tableView.reloadData()
     }
     
     @IBAction func filterButtonDidTap(_ sender: UIBarButtonItem) {
-        let controller = FilterTableViewController(with: ["New task", "In progress", "Done"])
+        let controller = FilterTableViewController(with: ["All", "New task", "In progress", "Done"])
         controller.modalPresentationStyle = .popover
-        controller.preferredContentSize = CGSize(width: 200, height: 130)
+        controller.preferredContentSize = CGSize(width: 200, height: 175)
         controller.delegate = self
         
         let popoverController = controller.popoverPresentationController
